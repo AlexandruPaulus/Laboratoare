@@ -1,0 +1,3 @@
+Suma:27
+Val_minima:2
+Val_maxima:8
