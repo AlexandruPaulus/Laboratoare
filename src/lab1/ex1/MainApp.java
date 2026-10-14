@@ -11,5 +11,6 @@ public class MainApp {
         int a = scanner.nextInt();
         System.out.println("Ati introdus valoarea "+a);
         scanner.close();
+        //eferfef
     }
 }
