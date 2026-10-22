@@ -1,0 +1,4 @@
+Suma: 27
+Media aritmetica: 4
+Val min: 2
+Val max: 8
