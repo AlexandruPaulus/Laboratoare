@@ -17,7 +17,7 @@ public class MainApp{
             if (cantec_out.createNewFile()) {
                 System.out.println("Fisier creat");
             }
-        } catch (IOException e) {
+        }catch (IOException e) {
             System.out.println("Eroare la crearea fisierului");
         }
 
