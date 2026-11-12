@@ -40,7 +40,6 @@ public class Vers {
         if (sir == null || cuvinte == null || cuvinte.isBlank()) {
             return "";
         }
-
         // 2. Curățăm spațiile și semnele de punctuație doar de la finalul versului ($)
         String versCuratat = sir.trim().replaceAll("[.,!?;:]+$", "");
         String cautat = cuvinte.trim();
