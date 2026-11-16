@@ -2,21 +2,24 @@ package lab4;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.channels.ScatteringByteChannel;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
+import static java.lang.System.setOut;
 
 public class MainApp {
-    static void main(String[] args)throws IOException {
+    static void main(String[] args) throws IOException {
         List<Echipament> echipamente = new ArrayList<>();
         File electronice = new File("Laboratoare/src/lab4/electronice.txt");
         File electronice1 = new File("C:\\Users\\paulu\\IdeaProjects\\Laboratoare\\src\\lab4\\electronice.txt");
         Scanner sc = new Scanner(electronice1);
-        while(sc.hasNextLine()){
+        while (sc.hasNextLine()) {
             String linie = sc.nextLine();
-            if(linie .isEmpty()){
+            if (linie.isEmpty()) {
                 continue;
             }
             String[] campuri = linie.trim().split("\\s*;\\s*");
@@ -26,19 +29,19 @@ public class MainApp {
             Echipament.ZonaMag zonaMag = Echipament.ZonaMag.valueOf(campuri[3]);
             Echipament.StareProdus stareProdus = Echipament.StareProdus.valueOf(campuri[4]);
             String tip = campuri[5].toLowerCase();
-            switch (tip){
+            switch (tip) {
                 case "imprimanta":
                     int nr_pg_min = Integer.valueOf(campuri[6]);
                     int rezolutie = Integer.valueOf(campuri[7]);
                     int nr_pg_cartus = Integer.valueOf(campuri[8]);
                     Imprimanta.ModTiparire modTiparie = Imprimanta.ModTiparire.valueOf(campuri[9]);
-                    echipamente.add(new Imprimanta(denumire,numar_inventar,pret,zonaMag,stareProdus,nr_pg_min,rezolutie,nr_pg_cartus,modTiparie));
+                    echipamente.add(new Imprimanta(denumire, numar_inventar, pret, zonaMag, stareProdus, nr_pg_min, rezolutie, nr_pg_cartus, modTiparie));
                     break;
 
                 case "copiator":
                     int nr_pagini_toner = Integer.valueOf(campuri[6]);
                     Copiator.FormatCopiere formatCopiere = Copiator.FormatCopiere.valueOf(campuri[7]);
-                    echipamente.add(new Copiator(denumire,numar_inventar,pret,zonaMag,stareProdus,nr_pagini_toner,formatCopiere));
+                    echipamente.add(new Copiator(denumire, numar_inventar, pret, zonaMag, stareProdus, nr_pagini_toner, formatCopiere));
                     break;
 
                 case "sistem de calcul":
@@ -46,13 +49,15 @@ public class MainApp {
                     int stocare = Integer.valueOf(campuri[7]);
                     SistemDeCalcul.TipMonitor tipMonitor = SistemDeCalcul.TipMonitor.valueOf(campuri[8]);
                     SistemDeCalcul.SistemOperare sistemOperare = SistemDeCalcul.SistemOperare.valueOf(campuri[9]);
-                    echipamente.add(new SistemDeCalcul(denumire,numar_inventar,pret,zonaMag,stareProdus,vit_procesor,stocare,tipMonitor,sistemOperare));
+                    echipamente.add(new SistemDeCalcul(denumire, numar_inventar, pret, zonaMag, stareProdus, vit_procesor, stocare, tipMonitor, sistemOperare));
                     break;
             }
         }
         int c;
         Scanner sc1 = new Scanner(System.in);
-        while(true){
+        boolean verificare = false;
+        int alegere = 0;
+        while (true) {
             System.out.println();
             System.out.println("1.Afişarea tuturor echipamentelor");
             System.out.println("2.Afişarea imprimantelor");
@@ -63,28 +68,28 @@ public class MainApp {
             System.out.println("7.Setarea unui format de copiere pentru copiatoare");
             System.out.println("8.Instalarea unui anumit sistem de operare pe un sistem de calcul");
             System.out.println("9.Afişarea echipamentelor vândute");
-            System.out.println("10. Serialiarea obiectelor/desearizarea colectiei de obiecte");
-            System.out.println("11. Exit");
+            System.out.println("10.Serialiarea obiectelor/desearizarea colectiei de obiecte");
+            System.out.println("11.Exit");
             System.out.println();
-            do{
+            do {
                 c = sc1.nextInt();
                 sc1.nextLine();
-                if(c < 1 || c > 11){
+                if (c < 1 || c > 11) {
                     System.out.println("Introduceti o valoare intre 1-11");
                 }
-            }while(c < 1 || c > 11);
+            } while (c < 1 || c > 11);
 
-            switch (c){
+            switch (c) {
                 case 1:
-                    for(Echipament e: echipamente){
+                    for (Echipament e : echipamente) {
                         System.out.println(e.toString());
                     }
                     break;
 
                 case 2:
                     System.out.println("*****Imprimante*****");
-                    for(Echipament e: echipamente){
-                        if(e instanceof Imprimanta){
+                    for (Echipament e : echipamente) {
+                        if (e instanceof Imprimanta) {
                             System.out.println(e);
                         }
                     }
@@ -92,8 +97,8 @@ public class MainApp {
 
                 case 3:
                     System.out.println("*****Copiatoare*****");
-                    for(Echipament e: echipamente){
-                        if(e instanceof Copiator){
+                    for (Echipament e : echipamente) {
+                        if (e instanceof Copiator) {
                             System.out.println(e);
                         }
                     }
@@ -101,8 +106,8 @@ public class MainApp {
 
                 case 4:
                     System.out.println("*****Sisteme de calcul*****");
-                    for(Echipament e:echipamente){
-                        if(e instanceof SistemDeCalcul){
+                    for (Echipament e : echipamente) {
+                        if (e instanceof SistemDeCalcul) {
                             System.out.println(e);
                         }
                     }
@@ -111,20 +116,25 @@ public class MainApp {
                 case 5:
                     String denumireProdus;
                     String denumireStare = "";
-                    int stare=0;
-                    boolean verificare = false;
+                    alegere = 0;
+                    verificare = false;
                     do {
                         System.out.print("Introduceti denumirea produsului pentru care modificati starea ");
                         denumireProdus = sc1.nextLine();
-                        for(Echipament e:echipamente){
-                            if(e.getDenumire().equals(denumireProdus)) {
+                        for (Echipament e : echipamente) {
+                            if (e.getDenumire().equals(denumireProdus)) {
                                 verificare = true;
                                 do {
                                     System.out.println("1.ACHIZITIONAT 2.EXPUS 3.VANDUT");
-                                    stare = sc1.nextInt();
-                                } while (stare != 1 && stare != 2 && stare != 3);
+                                    try {
+                                        alegere = Integer.valueOf(sc1.nextLine().trim());
+                                    } catch (NumberFormatException exception) {
+                                        System.out.println("Introduceti o valoare cuprinsa intre 1 si 3");
+                                    }
 
-                                switch (stare) {
+                                } while (alegere != 1 && alegere != 2 && alegere != 3);
+
+                                switch (alegere) {
                                     case 1:
                                         denumireStare = "ACHIZITIONAT";
                                         break;
@@ -141,24 +151,30 @@ public class MainApp {
                                 e.setStareProdus(denumireStare);
                             }
                         }
-                    }while(!verificare);
+                    } while (!verificare);
                     break;
 
                 case 6:
                     String denumireImprimanta, modImprimare = "";
-                    int alegere;
-                    boolean verificare2 = false;
+                    alegere = 0;
+                    verificare = false;
                     do {
                         System.out.print("Intorduceti denumirea imprimantei: ");
                         denumireImprimanta = sc1.nextLine();
-                        for(Echipament e:echipamente){
-                            if(e instanceof Imprimanta && e.getDenumire().equals(denumireImprimanta)){
-                                verificare2 = true;
-                                do{
+                        for (Echipament e : echipamente) {
+                            if (e instanceof Imprimanta && e.getDenumire().equals(denumireImprimanta)) {
+                                verificare = true;
+                                do {
                                     System.out.println("1.COLOR 2.ALB-NEGRU");
-                                    alegere = sc1.nextInt();
-                                }while(alegere != 1 && alegere != 2);
-                                switch (alegere){
+
+                                    try {
+                                        alegere = Integer.valueOf(sc1.nextLine().trim());
+
+                                    } catch (NumberFormatException exception) {
+                                        System.out.println("Introduceti 1 sau 2");
+                                    }
+                                } while (alegere != 1 && alegere != 2);
+                                switch (alegere) {
                                     case 1:
                                         modImprimare = "COLOR";
                                         break;
@@ -170,7 +186,74 @@ public class MainApp {
                                 ((Imprimanta) e).setModTiparire(modImprimare);
                             }
                         }
-                    }while(!verificare2);
+                    } while (!verificare);
+                    break;
+
+                case 7:
+                    String denumireCopiator, formatCopiator = "";
+                    alegere = 0;
+                    verificare = false;
+                    do {
+                        System.out.print("Introduceti denumirea copiatorului: ");
+                        denumireCopiator = sc1.nextLine();
+                        for (Echipament e : echipamente) {
+                            if (e.getDenumire().equals(denumireCopiator) && e instanceof Copiator) {
+                                verificare = true;
+                                do {
+                                    System.out.println("1. A3  2. A4");
+                                    try {
+                                        alegere = Integer.valueOf(sc1.nextLine().trim());
+                                    } catch (NumberFormatException exception) {
+                                        System.out.println("Alegeti 1 sau 2");
+                                    }
+                                } while (alegere != 1 && alegere != 2);
+                                switch (alegere) {
+                                    case 1:
+                                        formatCopiator = "A3";
+                                        break;
+                                    case 2:
+                                        formatCopiator = "A4";
+                                        break;
+                                }
+                                System.out.println("Formatul de copiere a fost schimbat in " + formatCopiator);
+                                ((Copiator) e).setFormatCopiere(formatCopiator);
+                            }
+                        }
+
+                    } while (!verificare);
+                    break;
+
+                case 8:
+                    String dernumireSistemCalcul, sistemOperare = "";
+                    alegere = 0;
+                    verificare = false;
+                    do {
+                        System.out.print("Introduceti denumirea sistemului de calcul ");
+                        dernumireSistemCalcul = sc1.nextLine();
+                        for (Echipament e : echipamente) {
+                            if (e instanceof SistemDeCalcul && e.getDenumire().equals(dernumireSistemCalcul)) {
+                                verificare = true;
+                                do {
+                                    System.out.println("1. Windows  2. Linux");
+                                    try {
+                                        alegere = Integer.valueOf(sc1.nextLine().trim());
+                                    } catch (NumberFormatException exception) {
+                                        System.out.println("Alegeti 1 sau 2");
+                                    }
+                                } while (alegere != 1 && alegere != 2);
+                                switch (alegere) {
+                                    case 1:
+                                        sistemOperare = "WINDOWS";
+                                        break;
+                                    case 2:
+                                        sistemOperare = "LINUX";
+                                        break;
+                                }
+                                System.out.println("Noul sistem de operare este " + sistemOperare);
+                                ((SistemDeCalcul) e).setSistemOperare(sistemOperare);
+                            }
+                        }
+                    } while (!verificare);
                     break;
                 case 11:
                     exit(0);
