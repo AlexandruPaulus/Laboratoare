@@ -12,7 +12,8 @@ public class MainApp {
     static void main(String[] args)throws IOException {
         List<Echipament> echipamente = new ArrayList<>();
         File electronice = new File("Laboratoare/src/lab4/electronice.txt");
-        Scanner sc = new Scanner(electronice);
+        File electronice1 = new File("C:\\Users\\paulu\\IdeaProjects\\Laboratoare\\src\\lab4\\electronice.txt");
+        Scanner sc = new Scanner(electronice1);
         while(sc.hasNextLine()){
             String linie = sc.nextLine();
             if(linie .isEmpty()){
@@ -108,15 +109,15 @@ public class MainApp {
                     break;
 
                 case 5:
-                    String denumire;
+                    String denumireProdus;
                     String denumireStare = "";
                     int stare=0;
                     boolean verificare = false;
                     do {
                         System.out.print("Introduceti denumirea produsului pentru care modificati starea ");
-                        denumire = sc1.nextLine();
+                        denumireProdus = sc1.nextLine();
                         for(Echipament e:echipamente){
-                            if(e.getDenumire().equals(denumire)) {
+                            if(e.getDenumire().equals(denumireProdus)) {
                                 verificare = true;
                                 do {
                                     System.out.println("1.ACHIZITIONAT 2.EXPUS 3.VANDUT");
@@ -136,7 +137,7 @@ public class MainApp {
                                         denumireStare = "VANDUT";
                                         break;
                                 }
-                                System.out.println("Stare modificata");
+                                System.out.println("Stare modificata in " + denumireStare);
                                 e.setStareProdus(denumireStare);
                             }
                         }
@@ -144,9 +145,32 @@ public class MainApp {
                     break;
 
                 case 6:
-                    String denumireImprimanta;
-
-
+                    String denumireImprimanta, modImprimare = "";
+                    int alegere;
+                    boolean verificare2 = false;
+                    do {
+                        System.out.print("Intorduceti denumirea imprimantei: ");
+                        denumireImprimanta = sc1.nextLine();
+                        for(Echipament e:echipamente){
+                            if(e instanceof Imprimanta && e.getDenumire().equals(denumireImprimanta)){
+                                verificare2 = true;
+                                do{
+                                    System.out.println("1.COLOR 2.ALB-NEGRU");
+                                    alegere = sc1.nextInt();
+                                }while(alegere != 1 && alegere != 2);
+                                switch (alegere){
+                                    case 1:
+                                        modImprimare = "COLOR";
+                                        break;
+                                    case 2:
+                                        modImprimare = "ALB_NEGRU";
+                                        break;
+                                }
+                                System.out.println("Modul de imprimare s-a modificat in " + modImprimare);
+                                ((Imprimanta) e).setModTiparire(modImprimare);
+                            }
+                        }
+                    }while(!verificare2);
                     break;
                 case 11:
                     exit(0);

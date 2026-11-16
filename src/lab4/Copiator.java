@@ -17,6 +17,6 @@ public class Copiator extends Echipament {
 
     @Override
     public String toString() {
-        return super.toString() + "\npagini/toner:" + nr_pg_toner + ", format copiere:" + formatCopiere;
+        return super.toString() + "\npagini/toner:" + nr_pg_toner + ", format copiere:" + formatCopiere + "\n";
     }
 }

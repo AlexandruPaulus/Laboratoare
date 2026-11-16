@@ -26,7 +26,7 @@ public class SistemDeCalcul extends Echipament{
 
     @Override
     public String toString(){
-        return super.toString() + "\nviteza procesor:" + vit_procesor + ", capacitate stocare:" + capacitate_SSD + ", tip monitor:" + tipMonitor.toString() + ", Sistem de operare:" + sistemOperare.toString();
+        return super.toString() + "\nviteza procesor:" + vit_procesor + ", capacitate stocare:" + capacitate_SSD + ", tip monitor:" + tipMonitor.toString() + ", Sistem de operare:" + sistemOperare.toString() + "\n";
     }
 }
 
