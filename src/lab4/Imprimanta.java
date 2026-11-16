@@ -1,5 +1,7 @@
 package lab4;
 
+import java.util.Locale;
+
 public class Imprimanta extends Echipament {
     public enum ModTiparire {
         COLOR,
@@ -25,6 +27,6 @@ public class Imprimanta extends Echipament {
 
     @Override
     public String toString() {
-        return super.toString() + "\nnumar pagini/minut:" + nr_pg_pmin + ", rezolutie:" + rezolutie + ", numar pagini/cartus:" + nr_pg_cart + ", mod tiparire:" + modTiparire + "\n";
+        return super.toString() + "\nnumar pagini/minut:" + nr_pg_pmin + ", rezolutie:" + rezolutie + ", numar pagini/cartus:" + nr_pg_cart + ", mod tiparire:" + modTiparire.toString().toLowerCase() + "\n";
     }
 }

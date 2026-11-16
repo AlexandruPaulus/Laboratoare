@@ -1,7 +1,5 @@
 package lab4;
 
-import java.util.Locale;
-
 public class Echipament {
 
     public enum ZonaMag {
@@ -38,6 +36,10 @@ public class Echipament {
 
     public String getDenumire() {
         return this.denumire;
+    }
+
+    public String getStareProdus(){
+        return this.stareProdus.toString();
     }
 
     @Override

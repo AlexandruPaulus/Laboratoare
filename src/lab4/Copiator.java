@@ -1,5 +1,7 @@
 package lab4;
 
+import java.util.Locale;
+
 public class Copiator extends Echipament {
 
     public enum FormatCopiere {
@@ -22,6 +24,6 @@ public class Copiator extends Echipament {
 
     @Override
     public String toString() {
-        return super.toString() + "\npagini/toner:" + nr_pg_toner + ", format copiere:" + formatCopiere + "\n";
+        return super.toString() + "\npagini/toner:" + nr_pg_toner + ", format copiere:" + formatCopiere.toString().toLowerCase() + "\n";
     }
 }

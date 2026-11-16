@@ -15,8 +15,7 @@ public class MainApp {
     static void main(String[] args) throws IOException {
         List<Echipament> echipamente = new ArrayList<>();
         File electronice = new File("Laboratoare/src/lab4/electronice.txt");
-        File electronice1 = new File("C:\\Users\\paulu\\IdeaProjects\\Laboratoare\\src\\lab4\\electronice.txt");
-        Scanner sc = new Scanner(electronice1);
+        Scanner sc = new Scanner(electronice);
         while (sc.hasNextLine()) {
             String linie = sc.nextLine();
             if (linie.isEmpty()) {
@@ -53,7 +52,6 @@ public class MainApp {
                     break;
             }
         }
-        int c;
         Scanner sc1 = new Scanner(System.in);
         boolean verificare = false;
         int alegere = 0;
@@ -68,18 +66,17 @@ public class MainApp {
             System.out.println("7.Setarea unui format de copiere pentru copiatoare");
             System.out.println("8.Instalarea unui anumit sistem de operare pe un sistem de calcul");
             System.out.println("9.Afişarea echipamentelor vândute");
-            System.out.println("10.Serialiarea obiectelor/desearizarea colectiei de obiecte");
-            System.out.println("11.Exit");
+            System.out.println("10.Exit");
             System.out.println();
             do {
-                c = sc1.nextInt();
-                sc1.nextLine();
-                if (c < 1 || c > 11) {
-                    System.out.println("Introduceti o valoare intre 1-11");
+                try {
+                    alegere = Integer.valueOf(sc1.nextLine().trim());
+                } catch (NumberFormatException exception) {
+                    System.out.println("Introduceti o valoare intre 1-10");
                 }
-            } while (c < 1 || c > 11);
+            } while (alegere < 1 && alegere > 11);
 
-            switch (c) {
+            switch (alegere) {
                 case 1:
                     for (Echipament e : echipamente) {
                         System.out.println(e.toString());
@@ -255,7 +252,16 @@ public class MainApp {
                         }
                     } while (!verificare);
                     break;
-                case 11:
+
+                case 9:
+                    for (Echipament e : echipamente) {
+                        if (e.getStareProdus().equals("VANDUT")) {
+                            System.out.println(e.toString());
+                        }
+                    }
+                    break;
+
+                case 10:
                     exit(0);
                     break;
             }

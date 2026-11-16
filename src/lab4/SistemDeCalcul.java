@@ -1,5 +1,7 @@
 package lab4;
 
+import java.util.Locale;
+
 public class SistemDeCalcul extends Echipament {
     public enum TipMonitor {
         IPS,
@@ -31,7 +33,7 @@ public class SistemDeCalcul extends Echipament {
 
     @Override
     public String toString() {
-        return super.toString() + "\nviteza procesor:" + vit_procesor + ", capacitate stocare:" + capacitate_SSD + ", tip monitor:" + tipMonitor.toString() + ", Sistem de operare:" + sistemOperare.toString() + "\n";
+        return super.toString() + "\nviteza procesor:" + vit_procesor + ", capacitate stocare:" + capacitate_SSD + ", tip monitor:" + tipMonitor.toString().toLowerCase() + ", Sistem de operare:" + sistemOperare.toString().toLowerCase() + "\n";
     }
 }
 
