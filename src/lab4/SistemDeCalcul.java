@@ -1,7 +1,5 @@
 package lab4;
 
-import java.util.Locale;
-
 public class SistemDeCalcul extends Echipament {
     public enum TipMonitor {
         IPS,

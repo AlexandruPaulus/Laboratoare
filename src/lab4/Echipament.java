@@ -38,7 +38,7 @@ public class Echipament {
         return this.denumire;
     }
 
-    public String getStareProdus(){
+    public String getStareProdus() {
         return this.stareProdus.toString();
     }
 

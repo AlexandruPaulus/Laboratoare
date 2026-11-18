@@ -7,9 +7,8 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 
-
-public class MainApp{
-    public static void main(String[] args)throws IOException {
+public class MainApp {
+    public static void main(String[] args) throws IOException {
         File cantec_out = new File("Laboratoare/src/lab2/ex2/cantec_out.txt");
         File cantec_in = new File("Laboratoare/src/lab2/ex2/cantec_in.txt");
 
@@ -17,7 +16,7 @@ public class MainApp{
             if (cantec_out.createNewFile()) {
                 System.out.println("Fisier creat");
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Eroare la crearea fisierului");
         }
 
@@ -30,30 +29,30 @@ public class MainApp{
                 vers[nrVersuri] = new Vers(linie);
                 nrVersuri++;
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Eroare la citire din fisier");
         }
 
         String tastatura;
 
-        try (Scanner sc = new Scanner(System.in)){
+        try (Scanner sc = new Scanner(System.in)) {
             System.out.print("Introduceti siru de caractere ");
             tastatura = sc.nextLine();
         }
 
-        try(PrintStream out = new PrintStream(cantec_out)){
-            for(int i = 0; i<nrVersuri;i++){
+        try (PrintStream out = new PrintStream(cantec_out)) {
+            for (int i = 0; i < nrVersuri; i++) {
                 String nr_cuv;
                 String nr_voc;
-                if(vers[i].nr_cuv() != 0){
+                if (vers[i].nr_cuv() != 0) {
                     nr_cuv = String.valueOf(vers[i].nr_cuv());
-                }else{
+                } else {
                     nr_cuv = "";
                 }
 
-                if(vers[i].nr_voc() != 0){
+                if (vers[i].nr_voc() != 0) {
                     nr_voc = String.valueOf(vers[i].nr_voc());
-                }else{
+                } else {
                     nr_voc = "";
                 }
 

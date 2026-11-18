@@ -1,7 +1,5 @@
 package lab4;
 
-import java.util.Locale;
-
 public class Imprimanta extends Echipament {
     public enum ModTiparire {
         COLOR,

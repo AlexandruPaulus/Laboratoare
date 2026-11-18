@@ -40,5 +40,5 @@ public class PerecheNumere {
     static void scriere(List<PerecheNumere> lista){
 
     }
-    static List<Persoana> citire();
+   // static List<Persoana> citire();
 }

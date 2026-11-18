@@ -2,14 +2,11 @@ package lab4;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.channels.ScatteringByteChannel;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
-import static java.lang.System.setOut;
 
 public class MainApp {
     static void main(String[] args) throws IOException {
